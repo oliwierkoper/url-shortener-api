@@ -64,3 +64,20 @@ def get_code(code: str):
     return{
         "error": "wrong url"
     }
+@app.get("/stats/{code}")
+def get_stats(code: str):
+    try:
+        with open(FILE_NAME,"r") as file:
+            codes=json.load(file)
+    except FileNotFoundError:
+        return{
+            "error": "no url found"
+        }
+    for i in codes:
+        if i["code"] == code:
+            return{
+                "clicks": i["clicks"]
+            }
+    return{
+        "error": "code does not exist"
+    }
